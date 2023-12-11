@@ -13,21 +13,21 @@ return new class extends Migration
     {
         Schema::create('containers', function (Blueprint $table) {
             $table->id();
-            $table->string('CONSIGNEE');
+            $table->string('CONSIGNEE')->nullable();
             $table->string('ISPAYE')->nullable();
             $table->string('PAYEMENT')->nullable();
             $table->string('COST_NUMBER')->nullable();
-            $table->string('CONTAINER_NUMBER');
-            $table->string('BL');
-            $table->string('DESTINATION');
+            $table->string('CONTAINER_NUMBER')->nullable();
+            $table->string('BL')->nullable();
+            $table->string('DESTINATION')->nullable();
             $table->string('TELEX_DOC');
-            $table->date('LOADING_TIME');
-            $table->date('ARRIVAL_TIME');
-            $table->integer('AGENT_PRICE');
+            $table->date('LOADING_TIME')->nullable();
+            $table->date('ARRIVAL_TIME')->nullable();
+            $table->integer('AGENT_PRICE')->nullable();
             $table->integer('COST_PRICE')->nullable();
-            $table->string('TYPE');
-            $table->string('SHIPPING_LINE');
-            $table->string('SHIPPING_AGENT');
+            $table->string('TYPE')->nullable();
+            $table->string('SHIPPING_LINE')->nullable();
+            $table->string('SHIPPING_AGENT')->nullable();
             $table->text('REMARK')->nullable();
             $table->integer('GRD_BALLES')->nullable();
             $table->integer('HAND_BALLES')->nullable();

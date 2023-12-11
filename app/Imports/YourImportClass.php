@@ -41,50 +41,63 @@ class YourImportClass implements ToCollection
     $rows = $rows->concat($oct);
     $rows = $rows->concat($nov);
 
-    $this->rander($rows->all(), $collection, $random);
+    $this->rander($rows->slice(0,321), $collection, $random);
 
      foreach($random  as $row){
-      dump($row);
-      dd('');
-        Container::create([
-          'CONSIGNEE'=> $row['CONSIGNEE ']
-        ]);
+        $data = $this->remplacerEspacesParUnderscores($row);
+        $data['TELEX_DOC'] = $data['TELEX_DOC']==='TELEX/DOC' ? '1' : '0';
+        Container::create($data);
+       // dump($row);
      }
   }
 
   function rander($rows, $collection, &$random)
   {
     foreach ($rows as $row) {
-//dump($row);
+
       $tableau = [
-        $collection[0][1] => $row[1],
-        $collection[0][2] . 'ISPAYE' => $row[2],
-        $collection[0][3] => $row[3],
+        trim($collection[0][1]) => $row[1],
+        trim($collection[0][2]) . 'ISPAYE' => $row[2],
+        trim($collection[0][3]) => $row[3],
         // $collection[0][4]=>$row[4],
-        $collection[0][5] => $row[5],
-        $collection[0][6] => $row[6],
-        $collection[0][7] => $row[7],
-        $collection[0][8] => $row[8],
-        $collection[0][9] => $row[9],
-        $collection[0][10] => $row[10] !== null ? Date::excelToDateTimeObject($row[10])->format('Y-m-d') : null,
-        $collection[0][11] => $row[11] !== null ? Date::excelToDateTimeObject($row[11])->format('Y-m-d') : null,
-        $collection[0][12] => $row[12],
-        $collection[0][13] => $row[13],
-        $collection[0][14] => $row[14],
-        $collection[0][15] => $row[15],
-        $collection[0][16] => $row[16],
-        $collection[0][17] => $row[17],
-        $collection[0][18] => $row[18],
-        $collection[0][19] => $row[19],
-        $collection[0][20] => $row[20],
-        $collection[0][21] => $row[21],
+        trim($collection[0][5]) => $row[5],
+        trim($collection[0][6]) => $row[6],
+        trim($collection[0][7]) => $row[7],
+        trim($collection[0][8]) => $row[8],
+        trim($collection[0][9]) => $row[9],
+        trim($collection[0][10]) => $row[10] !== null ? Date::excelToDateTimeObject($row[10])->format('Y-m-d') : null,
+        trim($collection[0][11]) => $row[11] !== null ? Date::excelToDateTimeObject($row[11])->format('Y-m-d') : null,
+        trim($collection[0][12]) => $row[12],
+        trim($collection[0][13]) => $row[13],
+        trim($collection[0][14]) => $row[14],
+        trim($collection[0][15]) => $row[15],
+        trim($collection[0][16]) => $row[16],
+        trim($collection[0][17]) => $row[17],
+        trim($collection[0][18]) => $row[18],
+        trim($collection[0][19]) => $row[19],
+        trim($collection[0][20]) => $row[20],
+        trim($collection[0][21]) => $row[21],
       ];
 
-      $tableau = array_map(function ($key, $value) {
-        return [trim($key) => trim($value)];
-    }, array_keys($row), $row);
 
      array_push($random, $tableau);
     }
   }
+
+  function remplacerEspacesParUnderscores($tableauAssociatif) {
+    $nouveauTableau = array();
+
+    foreach ($tableauAssociatif as $cle => $valeur) {
+        // Remplacer les espaces par des underscores dans la clé
+        $nouvelleCle = str_replace(' ', '_', $cle);
+
+        // Retirer les caractères "/"
+        $nouvelleCle = str_replace('/', '', $nouvelleCle);
+
+        // Ajouter la paire clé-valeur au nouveau tableau
+        $nouveauTableau[$nouvelleCle] = $valeur;
+    }
+
+    return $nouveauTableau;
+}
 }
