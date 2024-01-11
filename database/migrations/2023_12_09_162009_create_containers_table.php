@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('containers', function (Blueprint $table) {
             $table->id();
             $table->string('CONSIGNEE')->nullable();
-            $table->string('ISPAYE')->nullable();
+            $table->boolean('ISPAYE')->nullable();
             $table->string('PAYEMENT')->nullable();
             $table->string('COST_NUMBER')->nullable();
             $table->string('CONTAINER_NUMBER')->nullable();

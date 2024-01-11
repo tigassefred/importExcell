@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ExcelImportController;
+use App\Http\Controllers\Update;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,5 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/update' , [Update::class , 'save']);
 Route::get('/import-excel', 'ExcelImportController@index');
 Route::post('/import-excel', [ExcelImportController::class , 'import'])->name('import.excel');
